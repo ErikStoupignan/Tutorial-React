@@ -2,6 +2,7 @@
 import './ToDoApp.css';
 import React, { Component } from 'react';
 import ToDoList from '../ToDoList/ToDoList';
+import Header from '../Header/Header';
 
 export default class ToDoContainer extends Component {
   constructor(props) {
@@ -81,6 +82,7 @@ export default class ToDoContainer extends Component {
     const { todos, input } = this.state;
     return (
       <div className="ToDoApp-Container">
+        <Header />
         <div className="form-container">
           <input className="main-input" placeholder="add item..." type="text" value={input} onChange={this.handleChange} />
           <button className="main-button App-logo-spin App-logo" type="button" onClick={this.addItem}>+</button>
