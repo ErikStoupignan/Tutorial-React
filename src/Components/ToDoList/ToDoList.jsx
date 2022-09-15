@@ -5,17 +5,24 @@ import './ToDoList.css';
 
 export default class ToDoList extends Component {
   render() {
-    const { todos, check, modifyItem } = this.props;
+    const {
+      todos,
+      check,
+      modifyItem,
+      deletItem,
+    } = this.props;
+
     return (
       <ul className="ul-Container">
-        {todos.map((ObjecList) => (
+        {todos.map((ObjecList, index) => (
           <Item
             key={ObjecList.id}
-            id={ObjecList.id}
+            id={index}
             title={ObjecList.title}
             checked={ObjecList.completed}
             addCheck={check}
             modifyItem={modifyItem}
+            deletItem={deletItem}
           />
         ))}
       </ul>
@@ -31,7 +38,9 @@ const Item = (props) => {
     checked,
     addCheck,
     modifyItem,
+    deletItem,
   } = props;
+
   const [input, setInput] = useState(title);
   let style = { textDecoration: 'none' };
 
@@ -55,6 +64,9 @@ const Item = (props) => {
     <li className="li-element">
       <input className="checkbox" id={id} type="checkbox" checked={checked} onChange={addCheck} />
       <input className="li-input-text" id={id} type="text" style={style} value={input} onChange={handleInput} onKeyPress={handleEnter} />
+      <button type="button" id={id} onClick={deletItem} className="delet-icon">
+        +
+      </button>
     </li>
   );
 };
@@ -66,6 +78,7 @@ Item.defaultProps = {
   checked: bool,
   addCheck: bool,
   modifyItem: bool,
+  deletItem: bool,
 };
 
 Item.propTypes = {
@@ -74,12 +87,14 @@ Item.propTypes = {
   checked: PropTypes.bool,
   addCheck: PropTypes.func,
   modifyItem: PropTypes.func,
+  deletItem: PropTypes.func,
 };
 
 ToDoList.defaultProps = {
   todos: [],
   check: null,
   modifyItem: null,
+  deletItem: null,
 };
 
 ToDoList.propTypes = {
@@ -94,4 +109,5 @@ ToDoList.propTypes = {
   ),
   check: PropTypes.func,
   modifyItem: PropTypes.func,
+  deletItem: PropTypes.func,
 };

@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable class-methods-use-this */
 import './ToDoApp.css';
 import React, { Component } from 'react';
@@ -29,6 +30,7 @@ export default class ToDoContainer extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.addItem = this.addItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
     this.addChecked = this.addChecked.bind(this);
     this.modifyItem = this.modifyItem.bind(this);
   }
@@ -44,7 +46,15 @@ export default class ToDoContainer extends Component {
     const clean = input.trim();
     const newElement = { id: todos.length + 1, title: clean, completed: false };
     shallowCopy.push(newElement);
-    this.setState({ todos: shallowCopy });
+    this.setState({ todos: shallowCopy, input: '' });
+  }
+
+  deleteItem(e) {
+    const { todos } = this.state;
+    const id = parseInt(e.target.id, 10);
+    const array = [...todos];
+    array.splice(id, 1);
+    this.setState({ todos: array });
   }
 
   addChecked(event) {
@@ -87,7 +97,12 @@ export default class ToDoContainer extends Component {
           <input className="main-input" placeholder="add item..." type="text" value={input} onChange={this.handleChange} />
           <button className="main-button App-logo-spin App-logo" type="button" onClick={this.addItem}>+</button>
         </div>
-        <ToDoList todos={todos} check={this.addChecked} modifyItem={this.modifyItem} />
+        <ToDoList
+          todos={todos}
+          check={this.addChecked}
+          modifyItem={this.modifyItem}
+          deletItem={this.deleteItem}
+        />
       </div>
     );
   }

@@ -41,8 +41,37 @@
   font-size: 12px;
   width: 80%;
   background: transparent;
+  outline: none;
+  padding-left: 10px;
 }
 
-.li-input-text:active {
-  border: 0.5px solid #000;
+.li-input-text:focus {
+  border: 0.5px solid rgba(155, 153, 153, 0.514);
+  background: rgba(150, 243, 238, 0.514);
+  border-radius: 10px;
+}
+
+.delet-icon {
+  rotate: 45deg;
+  color: rgb(198, 198, 198);
+  font-size: 20px;
+  margin: auto 0;
+  border: none;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 12px;
+  height: 12px;
+  padding: 4px;
+}
+
+.delet-icon:hover {
+  color:orange;
+  transform: scale(1.05);
+}
+
+.delet-icon:active {
+  color:rgb(213, 66, 66);
+  transform: scale(0.95);
 }
