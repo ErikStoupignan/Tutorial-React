@@ -9,20 +9,20 @@ export default class ToDoList extends Component {
       todos,
       check,
       modifyItem,
-      deletItem,
+      deleteItem,
     } = this.props;
 
     return (
       <ul className="ul-Container">
-        {todos.map((ObjecList, index) => (
+        {todos.map((ObjecList) => (
           <Item
             key={ObjecList.id}
-            id={index}
+            id={ObjecList.id}
             title={ObjecList.title}
             checked={ObjecList.completed}
             addCheck={check}
             modifyItem={modifyItem}
-            deletItem={deletItem}
+            deleteItem={deleteItem}
           />
         ))}
       </ul>
@@ -38,7 +38,7 @@ const Item = (props) => {
     checked,
     addCheck,
     modifyItem,
-    deletItem,
+    deleteItem,
   } = props;
 
   const [input, setInput] = useState(title);
@@ -61,10 +61,10 @@ const Item = (props) => {
   }
 
   return (
-    <li className="li-element">
+    <li id={id} className="li-element">
       <input className="checkbox" id={id} type="checkbox" checked={checked} onChange={addCheck} />
       <input className="li-input-text" id={id} type="text" style={style} value={input} onChange={handleInput} onKeyPress={handleEnter} />
-      <button type="button" id={id} onClick={deletItem} className="delet-icon">
+      <button type="button" id={id} onClick={(event) => deleteItem(event.target.id)} className="delet-icon">
         +
       </button>
     </li>
@@ -73,35 +73,35 @@ const Item = (props) => {
 
 // Default Props & proptypes zone
 Item.defaultProps = {
-  id: 0,
+  id: '0',
   title: string,
   checked: bool,
   addCheck: bool,
   modifyItem: bool,
-  deletItem: bool,
+  deleteItem: null,
 };
 
 Item.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
   title: PropTypes.string,
   checked: PropTypes.bool,
   addCheck: PropTypes.func,
   modifyItem: PropTypes.func,
-  deletItem: PropTypes.func,
+  deleteItem: PropTypes.func,
 };
 
 ToDoList.defaultProps = {
   todos: [],
   check: null,
   modifyItem: null,
-  deletItem: null,
+  deleteItem: null,
 };
 
 ToDoList.propTypes = {
   todos: PropTypes.arrayOf(
     PropTypes.shape(
       {
-        id: PropTypes.number,
+        id: PropTypes.string,
         title: PropTypes.string,
         completed: PropTypes.bool,
       },
@@ -109,5 +109,5 @@ ToDoList.propTypes = {
   ),
   check: PropTypes.func,
   modifyItem: PropTypes.func,
-  deletItem: PropTypes.func,
+  deleteItem: PropTypes.func,
 };

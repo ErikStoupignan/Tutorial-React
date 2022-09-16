@@ -1,7 +1,6 @@
-/* eslint-disable array-callback-return */
-/* eslint-disable class-methods-use-this */
 import './ToDoApp.css';
 import React, { Component } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import ToDoList from '../ToDoList/ToDoList';
 import Header from '../Header/Header';
 
@@ -9,23 +8,7 @@ export default class ToDoContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: [
-        {
-          id: 1,
-          title: 'Setup development environment',
-          completed: true,
-        },
-        {
-          id: 2,
-          title: 'Develop website and add content',
-          completed: false,
-        },
-        {
-          id: 3,
-          title: 'Deploy to live server',
-          completed: false,
-        },
-      ],
+      todos: [],
       input: '',
     };
     this.handleChange = this.handleChange.bind(this);
@@ -35,30 +18,53 @@ export default class ToDoContainer extends Component {
     this.modifyItem = this.modifyItem.bind(this);
   }
 
+  // Local Storage - Download from the browser
+  componentDidMount() {
+    const temp = localStorage.getItem('todos');
+    const loadedInfo = JSON.parse(temp);
+    if (loadedInfo) {
+      this.setState({ todos: loadedInfo });
+    }
+  }
+
+  // Local Storage - Download from the browser
+  componentDidUpdate(prevState) {
+    const { todos } = this.state;
+    if (prevState.todos !== todos) {
+      const temp = JSON.stringify(todos);
+      localStorage.setItem('todos', temp);
+    }
+  }
+
+  // Save every letter inside the main input
   handleChange(event) {
     this.setState({ input: event.target.value });
   }
 
+  // Add new element inside the list
   addItem() {
     const { input, todos } = this.state;
     const shallowCopy = [...todos];
     if (input === '') return;
     const clean = input.trim();
-    const newElement = { id: todos.length + 1, title: clean, completed: false };
+    const newElement = { id: uuidv4(), title: clean, completed: false };
     shallowCopy.push(newElement);
     this.setState({ todos: shallowCopy, input: '' });
   }
 
-  deleteItem(e) {
-    const { todos } = this.state;
-    const id = parseInt(e.target.id, 10);
-    const array = [...todos];
-    array.splice(id, 1);
-    this.setState({ todos: array });
+  // Delete li item function
+  deleteItem(index) {
+    this.setState((previousState) => {
+      const { todos } = previousState;
+
+      const newArr = todos.filter(({ id }) => id !== index);
+      return { todos: newArr };
+    });
   }
 
+  // Review the state of of the checkbox
   addChecked(event) {
-    const id = parseInt(event.target.id, 10);
+    const { id } = event.target;
     const { todos } = this.state;
     const array = [...todos];
 
@@ -73,6 +79,7 @@ export default class ToDoContainer extends Component {
     this.setState({ todos: newArray });
   }
 
+  // Modify the content inside the every Li element
   modifyItem(newChange, id) {
     const { todos } = this.state;
     const array = [...todos];
@@ -101,7 +108,7 @@ export default class ToDoContainer extends Component {
           todos={todos}
           check={this.addChecked}
           modifyItem={this.modifyItem}
-          deletItem={this.deleteItem}
+          deleteItem={this.deleteItem}
         />
       </div>
     );
