@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo:hover {
+    animation: App-logo-spin infinite 2s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ToDoApp-Container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.form-container {
+  border: 1px solid rgba(129, 129, 129, 0.43);
+  width: 70vw;
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  border-radius: 30px;
+  position: relative;
+  box-shadow: 0 2px 5px black;
+}
+
+.main-input {
+  width: 90%;
+  padding-left: 10px;
+  border: none;
+  outline: none;
+}
+
+.main-button {
+  border-radius: 50%;
+  border: none;
+  background: rgb(2, 85, 85);
+  color: white;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 25px;
+  top: 15%;
+}
+
+.main-button:active {
+  transform: scale(0.9);
+  background: rgb(1, 64, 64);
+}
