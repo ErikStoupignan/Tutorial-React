@@ -67,11 +67,11 @@
 }
 
 .delet-icon:hover {
-  color:orange;
+  color: orange;
   transform: scale(1.05);
 }
 
 .delet-icon:active {
-  color:rgb(213, 66, 66);
+  color: rgb(213, 66, 66);
   transform: scale(0.95);
 }
